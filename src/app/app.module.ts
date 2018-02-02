@@ -4,7 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
+import {AssetbuilderModule} from './assetbuilder/assetbuilder.module';
 import {MetaModule} from './meta/meta.module';
+
 
 @NgModule({
   declarations: [
@@ -14,6 +16,7 @@ import {MetaModule} from './meta/meta.module';
     BrowserModule,
     FormsModule,
     HttpModule,
+    AssetbuilderModule,
     MetaModule
   ],
   providers: [],
