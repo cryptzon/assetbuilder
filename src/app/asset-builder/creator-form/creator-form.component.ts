@@ -17,11 +17,11 @@ export class CreatorFormComponent implements OnInit {
   model = {
     name: '',
     totalSupply: 0,
-    description: ''
+    description: '',
+    account: ''
   };
 
   status = '';
-
 
   constructor(private web3Service: Web3Service) {
     console.log('Constructor: ' + web3Service);
@@ -29,20 +29,38 @@ export class CreatorFormComponent implements OnInit {
 
   ngOnInit() {
     console.log('OnInit: ' + this.web3Service);
-    console.log(this);
-    console.log(simpleAsset_artifacts);
 
-    /*this.web3Service.artifactsToContract(simpleAsset_artifacts)
-      .then((simpleAssetContractAbstraction) => {
-        this.SimpleAssetContract = simpleAssetContractAbstraction;
-      }
-    );*/
+    // subscribe to watch account change in metamask
+    this.watchAccount();
 
+    // get AssetFactory contract
     this.web3Service.artifactsToContract(assetFactory_artifacts)
       .then((contractAbstraction) => {
         this.AssetFactory = contractAbstraction;
       }
     );
+  }
+
+  watchAccount() {
+    this.web3Service.accountsObservable.subscribe((accounts) => {
+      this.accounts = accounts;
+      this.model.account = accounts[0];
+      this.refreshBalance();
+    });
+  }
+
+  async refreshBalance() {
+    //TODO: List assets created buy the selected Address
+
+    /*try {
+      const deployedMetaCoin = await this.MetaCoin.deployed();
+      const metaCoinBalance = await deployedMetaCoin.getBalance.call(this.model.account);
+      console.log('Found balance: ' + metaCoinBalance);
+      this.model.balance = metaCoinBalance;
+    } catch (e) {
+      console.log(e);
+      this.setStatus('Error getting balance; see log.');
+    }*/
   }
 
   setStatus(status) {
@@ -68,12 +86,15 @@ export class CreatorFormComponent implements OnInit {
     console.log("Asset Name: "+this.model.name);
     console.log("Total Supply: "+this.model.totalSupply);
     console.log("Description: "+this.model.description);
-    //this.SimpleAssetContract.new(this.model.name,this.model.totalSupply,this.model.description, {gas: 90000*2},
+
     this.setStatus('Registering contract... (please wait)');
+
     try {
       const deployedAssetFactory = await this.AssetFactory.deployed();
-      this.setStatus(await deployedAssetFactory.hello.call());
-      //const transaction = await deployedAssetFactory.registerSimpleAssetType(this.model.name,this.model.totalSupply,this.model.description, {gas: 90000*2});
+
+      //TODO: handle the creation of new asset
+      const transaction = await deployedAssetFactory.registerSimpleAssetType(this.model.name,this.model.totalSupply,this.model.description,
+        {gas: 90000*2, from:this.model.account});
 
       /*if (!transaction) {
         this.setStatus('Transaction failed!');
