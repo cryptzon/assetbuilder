@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Web3Service } from '../../util/web3.service';
 
 import simpleAsset_artifacts from '../../../../build/contracts/SimpleAsset.json';
-//const simpleAsset_artifacts = require('../../../../build/contracts/SimpleAsset.json');
-
-import testContract_artifacts from '../../../../build/contracts/TestContract.json';
+import assetFactory_artifacts from '../../../../build/contracts/AssetFactory.json';
 
 
 @Component({
@@ -14,8 +12,7 @@ import testContract_artifacts from '../../../../build/contracts/TestContract.jso
 })
 export class CreatorFormComponent implements OnInit {
 
-  SimpleAssetContract: any;
-  TestContract: any;
+  AssetFactory: any;
 
   model = {
     name: '',
@@ -35,15 +32,15 @@ export class CreatorFormComponent implements OnInit {
     console.log(this);
     console.log(simpleAsset_artifacts);
 
-    this.web3Service.artifactsToContract(simpleAsset_artifacts)
+    /*this.web3Service.artifactsToContract(simpleAsset_artifacts)
       .then((simpleAssetContractAbstraction) => {
         this.SimpleAssetContract = simpleAssetContractAbstraction;
       }
-    );
+    );*/
 
-    this.web3Service.artifactsToContract(testContract_artifacts)
-      .then((testContractAbstraction) => {
-        this.TestContract = testContractAbstraction;
+    this.web3Service.artifactsToContract(assetFactory_artifacts)
+      .then((contractAbstraction) => {
+        this.AssetFactory = contractAbstraction;
       }
     );
   }
@@ -65,7 +62,7 @@ export class CreatorFormComponent implements OnInit {
     this.model.description = e.target.value;
   }
 
-  createAsset() {
+  async createAsset() {
     console.log("On createAsset!");
 
     console.log("Asset Name: "+this.model.name);
@@ -73,10 +70,29 @@ export class CreatorFormComponent implements OnInit {
     console.log("Description: "+this.model.description);
     //this.SimpleAssetContract.new(this.model.name,this.model.totalSupply,this.model.description, {gas: 90000*2},
 
-    this.TestContract.new({gas: 90000*2},
+
+    this.setStatus('Registering contract... (please wait)');
+    try {
+      const deployedAssetFactory = await this.AssetFactory.deployed();
+      const transaction = await deployedAssetFactory.sendCoin.registerSimpleAssetType(registerSimpleAssetType(this.model.name,this.model.totalSupply,this.model.description, {gas: 90000*2}));
+
+      if (!transaction) {
+        this.setStatus('Transaction failed!');
+      } else {
+        this.setStatus('Transaction complete!');
+      }
+    } catch (e) {
+      console.log(e);
+      this.setStatus('Error sending coin; see log.');
+    }
+/*
+
+    debugger;
+    this.AssetFactory.registerSimpleAssetType(this.model.name,this.model.totalSupply,this.model.description, {gas: 90000*2},
       (err, res) => {
         console.log(res);
         console.log(res.transactionHash);
+        debugger;
         /*web3.eth.getTransactionReceipt(res.transactionHash, (err2, res2) => {
             if (err) {
                 console.log(err2);
@@ -93,7 +109,7 @@ export class CreatorFormComponent implements OnInit {
                 //deployedContract.g.call((err3, res3) => {console.log(res3)});
             }
           });*/
-    });
+    //});
   }
 
 }

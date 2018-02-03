@@ -59,6 +59,8 @@ export class MetaSenderComponent implements OnInit {
 
     this.setStatus('Initiating transaction... (please wait)');
     try {
+      console.log("Address: "+this.MetaCoin.address);
+      debugger;
       const deployedMetaCoin = await this.MetaCoin.deployed();
       const transaction = await deployedMetaCoin.sendCoin.sendTransaction(receiver, amount, {from: this.model.account});
 
@@ -75,7 +77,7 @@ export class MetaSenderComponent implements OnInit {
 
   async refreshBalance() {
     console.log('Refreshing balance');
-
+    debugger;
     try {
       const deployedMetaCoin = await this.MetaCoin.deployed();
       const metaCoinBalance = await deployedMetaCoin.getBalance.call(this.model.account);
