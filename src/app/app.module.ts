@@ -4,20 +4,20 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import {AssetbuilderModule} from './assetbuilder/assetbuilder.module';
-import {MetaModule} from './meta/meta.module';
+import { AssetBuilderModule } from './asset-builder/asset-builder.module';
+import { CreatorFormComponent } from './asset-builder/creator-form/creator-form.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CreatorFormComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    AssetbuilderModule,
-    MetaModule
+    AssetBuilderModule
   ],
   providers: [],
   bootstrap: [AppComponent]
