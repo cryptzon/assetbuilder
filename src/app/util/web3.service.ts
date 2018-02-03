@@ -1,8 +1,12 @@
 import {Injectable} from '@angular/core';
 //import Web3 from 'web3';
 import * as Web3 from 'web3';
+//import Web3 from 'web3';
 import * as contract from 'truffle-contract';
 import {Subject} from 'rxjs/Rx';
+
+import simpleAsset_artifacts from '../../../build/contracts/SimpleAsset.json';
+
 
 declare let window: any;
 
