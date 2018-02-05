@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Web3Service } from '../../util/web3.service';
-
 import simpleAsset_artifacts from '../../../../build/contracts/SimpleAsset.json';
 import assetFactory_artifacts from '../../../../build/contracts/AssetFactory.json';
-
 
 @Component({
   selector: 'app-creator-form',
@@ -13,6 +11,7 @@ import assetFactory_artifacts from '../../../../build/contracts/AssetFactory.jso
 export class CreatorFormComponent implements OnInit {
 
   AssetFactory: any;
+  accounts: string[];
 
   model = {
     name: '',
