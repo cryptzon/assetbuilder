@@ -1,29 +1,28 @@
-<div>
+<div class="container-fluid">
   <h2>Use this tool to build your own custom Crypto-Asset</h2>
 
-  <p>
-    creator-form works! We will build out form sub-components inside this parent component.
-  </p>
-
-  <br>
-    <label for="asset-name">Name:</label>
-    <input type="text" id="name" placeholder="My Crypto Asset" (change)="setName($event)"/>
-  <br>
-  <br>
-    <label for="totalSupply">Total Supply:</label>
-    <input type="text" id="totalSupply" placeholder="10000" (change)="setTotalSupply($event)"/>
-  <br>
-  <br>
-    <label for="description">Description:</label>
-    <input type="text" id="description" placeholder="This is my first Crypto Asset!" (change)="setDescription($event)"/>
-
-  <br>
-  <br>
-    <button id="create" (click)="createAsset()">Create Asset</button>
-  <br>
-  <br>
-    <span id="status">{{status}}</span>
+  <p>We will build out form sub-components inside this parent component.</p>
 
 
+  <form class="container">
+    <div class="form-group">
+      <label for="asset-name">Name:</label>
+      <input class="form-control" type="text" id="name" placeholder="My Crypto Asset" (change)="setName($event)"/>
+    </div>
 
+    <div class="form-group">
+      <label for="totalSupply">Total Supply:</label>
+      <input class="form-control" type="text" id="totalSupply" placeholder="10000" (change)="setTotalSupply($event)"/>
+    </div>
+      
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <input class="form-control" type="text" id="description" placeholder="This is my first Crypto Asset!" (change)="setDescription($event)"/>
+    </div>
+      
+    <button class="btn btn-primary" id="create" (click)="createAsset()">Create Asset</button>
+  </form>
+
+  <span id="status">{{status}}</span>
+  
 </div>

@@ -13,6 +13,7 @@ import assetFactory_artifacts from '../../../../build/contracts/AssetFactory.jso
 export class CreatorFormComponent implements OnInit {
 
   AssetFactory: any;
+  accounts: string[];
 
   model = {
     name: '',
