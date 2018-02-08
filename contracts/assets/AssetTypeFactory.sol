@@ -12,6 +12,7 @@ contract AssetTypeFactory is Ownable{
   }
 
   function registerAssetType(address _assetTypeAddress) internal {
+    require(assetTypesRegistry != 0);
     AssetTypesRegistry registry = AssetTypesRegistry(assetTypesRegistry);
 
     registry.registerAssetType(_assetTypeAddress);
