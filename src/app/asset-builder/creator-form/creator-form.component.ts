@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Web3Service } from '../../util/web3.service';
 
-import simpleAsset_artifacts from '../../../../build/contracts/SimpleAsset.json';
-import assetFactory_artifacts from '../../../../build/contracts/AssetFactory.json';
+import simpleAssetTypeFactory_artifacts from '../../../../build/contracts/SimpleAssetTypeFactory.json';
+import assetTypesRegistry_artifacts from '../../../../build/contracts/AssetTypesRegistry.json';
 
 
 @Component({
@@ -12,7 +12,9 @@ import assetFactory_artifacts from '../../../../build/contracts/AssetFactory.jso
 })
 export class CreatorFormComponent implements OnInit {
 
-  AssetFactory: any;
+  AssetTypesRegistry: any;
+  SimpleAssetTypeFactory: any;
+
   accounts: string[];
 
   model = {
@@ -35,9 +37,14 @@ export class CreatorFormComponent implements OnInit {
     this.watchAccount();
 
     // get AssetFactory contract
-    this.web3Service.artifactsToContract(assetFactory_artifacts)
+    this.web3Service.artifactsToContract(assetTypesRegistry_artifacts)
       .then((contractAbstraction) => {
-        this.AssetFactory = contractAbstraction;
+        this.AssetTypesRegistry = contractAbstraction;
+      }
+    );
+    this.web3Service.artifactsToContract(simpleAssetTypeFactory_artifacts)
+      .then((contractAbstraction) => {
+        this.SimpleAssetTypeFactory = contractAbstraction;
       }
     );
   }
@@ -81,8 +88,8 @@ export class CreatorFormComponent implements OnInit {
     this.model.description = e.target.value;
   }
 
-  async createAsset() {
-    console.log("On createAsset!");
+  async createSimpleAssetType() {
+    console.log("On createSimpleAssetType!");
 
     console.log("Asset Name: "+this.model.name);
     console.log("Total Supply: "+this.model.totalSupply);
@@ -91,10 +98,10 @@ export class CreatorFormComponent implements OnInit {
     this.setStatus('Registering contract... (please wait)');
 
     try {
-      const deployedAssetFactory = await this.AssetFactory.deployed();
+      const deployedSimpleAssetTypeFactory = await this.SimpleAssetTypeFactory.deployed();
 
       //TODO: handle the creation of new asset
-      const transaction = await deployedAssetFactory.registerSimpleAssetType(this.model.name,this.model.totalSupply,this.model.description,
+      const transaction = await deployedSimpleAssetTypeFactory.createSimpleAssetType(this.model.name,this.model.totalSupply,this.model.description,
         {gas: 90000*2, from:this.model.account});
 
       /*if (!transaction) {

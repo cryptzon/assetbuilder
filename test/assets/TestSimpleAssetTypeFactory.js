@@ -17,6 +17,17 @@ contract("SimpleAssetTypeFactory", async function(accounts) {
     return web3.toAscii(str).replace(/\u0000/g, '');
   }
 
+  it("should ensure the factory has the registry set", async function() {
+    const factory = await SimpleAssetTypeFactory.deployed();
+    const registry = await AssetTypesRegistry.deployed();
+
+    let factoryRegistryAddress = await factory.assetTypesRegistry.call();
+    console.log("factory:"+factory.address);
+    console.log("registry:"+registry.address);
+    console.log("factoryRegistryAddress:"+factoryRegistryAddress);
+    assert.equal(factoryRegistryAddress, registry.address, "Register address stored in the factory is not the one deployed");
+
+  });
   it("should create a new asset type and verify values stored", async function() {
     const factory = await SimpleAssetTypeFactory.new({from: accounts[0]});
     const registry = await AssetTypesRegistry.new({from: accounts[0]});
@@ -33,6 +44,8 @@ contract("SimpleAssetTypeFactory", async function(accounts) {
     assert.equal(assetsFromOwner.length, 1, "Assets from owner not 1");
 
     let simpleAssetContract = await SimpleAssetType.at(assetsFromOwner[0]); //assetsFromOwner[0]
+
+    assert.equal(toAscii(await simpleAssetContract.assetType.call()), "SimpleAssetType", "Asset type does not match");
 
     assert.equal(name, toAscii(await simpleAssetContract.name.call()), "Name not equal");
     assert.equal(totalSupply, await simpleAssetContract.totalSupply.call(), "TotalSupply not equal");

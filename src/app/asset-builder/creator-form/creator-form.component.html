@@ -14,15 +14,15 @@
       <label for="totalSupply">Total Supply:</label>
       <input class="form-control" type="text" id="totalSupply" placeholder="10000" (change)="setTotalSupply($event)"/>
     </div>
-      
+
     <div class="form-group">
       <label for="description">Description:</label>
       <input class="form-control" type="text" id="description" placeholder="This is my first Crypto Asset!" (change)="setDescription($event)"/>
     </div>
-      
-    <button class="btn btn-primary" id="create" (click)="createAsset()">Create Asset</button>
+
+    <button class="btn btn-primary" id="create" (click)="createSimpleAssetType()">Create Asset</button>
   </form>
 
   <span id="status">{{status}}</span>
-  
+
 </div>
