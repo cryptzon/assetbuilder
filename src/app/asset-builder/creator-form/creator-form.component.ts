@@ -1,7 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Web3Service } from '../../util/web3.service';
-import simpleAsset_artifacts from '../../../../build/contracts/SimpleAsset.json';
-import assetFactory_artifacts from '../../../../build/contracts/AssetFactory.json';
+
+import simpleAssetTypeFactory_artifacts from '../../../../build/contracts/SimpleAssetTypeFactory.json';
+import assetTypesRegistry_artifacts from '../../../../build/contracts/AssetTypesRegistry.json';
+import assetType_artifacts from '../../../../build/contracts/AssetType.json';
+import simplAssetType_artifacts from '../../../../build/contracts/SimpleAssetType.json';
+
+// TODO: Move to an util library
+let toAscii = function(str) {
+  return web3.toAscii(str).replace(/\u0000/g, '');
+}
+
 
 @Component({
   selector: 'app-creator-form',
@@ -10,7 +19,11 @@ import assetFactory_artifacts from '../../../../build/contracts/AssetFactory.jso
 })
 export class CreatorFormComponent implements OnInit {
 
-  AssetFactory: any;
+  AssetTypesRegistry: any;
+  SimpleAssetTypeFactory: any;
+  AssetType: any;
+  SimpleAssetType: any;
+
   accounts: string[];
 
   model = {
@@ -33,9 +46,30 @@ export class CreatorFormComponent implements OnInit {
     this.watchAccount();
 
     // get AssetFactory contract
-    this.web3Service.artifactsToContract(assetFactory_artifacts)
+    this.web3Service.artifactsToContract(assetTypesRegistry_artifacts)
       .then((contractAbstraction) => {
-        this.AssetFactory = contractAbstraction;
+        this.AssetTypesRegistry = contractAbstraction;
+      }
+    );
+    this.web3Service.artifactsToContract(simpleAssetTypeFactory_artifacts)
+      .then(async (contractAbstraction) => {
+        this.SimpleAssetTypeFactory = contractAbstraction;
+        const deployedSimpleAssetTypeFactory = await this.SimpleAssetTypeFactory.deployed();
+
+        let factoryRegistryAddress = await deployedSimpleAssetTypeFactory.assetTypesRegistry.call();
+        this.status = "Registry address: "+factoryRegistryAddress;
+
+      }
+    );
+    this.web3Service.artifactsToContract(assetType_artifacts)
+      .then((contractAbstraction) => {
+        this.AssetType = contractAbstraction;
+        this.refreshBalance();
+      }
+    );
+    this.web3Service.artifactsToContract(simplAssetType_artifacts)
+      .then((contractAbstraction) => {
+        this.SimpleAssetType = contractAbstraction;
       }
     );
   }
@@ -49,7 +83,43 @@ export class CreatorFormComponent implements OnInit {
   }
 
   async refreshBalance() {
-    //TODO: List assets created buy the selected Address
+    //List assets created buy the selected Address
+    try {
+      const deployedRegistry = await this.AssetTypesRegistry.deployed();
+
+      const assetsFromOwner = await deployedRegistry.getAssetsFromOwner.call(this.model.account);
+      console.log(assetsFromOwner);
+      for(let i = 0; i < assetsFromOwner.length; i++) {
+        let assetContractAddress = assetsFromOwner[i];
+        //console.log(assetContractAddress);
+
+        let assetType = await this.AssetType.at(assetContractAddress);
+        let assetTypeStr = toAscii(await assetType.assetType.call());
+        console.log(assetContractAddress+" - "+assetTypeStr);
+      }
+
+      /*
+      const transaction = await deployedSimpleAssetTypeFactory.createSimpleAssetType(this.model.name,this.model.totalSupply,this.model.description,
+        {gas: 900000, from:this.model.account});
+        console.log(transaction);
+        for(let i = 0; i < transaction.logs.length; i++) {
+          let value = transaction.logs[i];
+          if(value.event == "SimpleAssetTypeCreated") {
+            console.log("SimpleAssetTypeCreated event detected");
+            this.status = "New contract created: "+value.args._contractAddress);
+            console.log(value.args._contractAddress);
+          }
+        });
+      /*if (!transaction) {
+        this.setStatus('Transaction failed!');
+      } else {
+        this.setStatus('Transaction complete!');
+      }*/
+    } catch (e) {
+      console.log(e);
+      this.setStatus('Error sending coin; see log.');
+    }
+
 
     /*try {
       const deployedMetaCoin = await this.MetaCoin.deployed();
@@ -79,8 +149,9 @@ export class CreatorFormComponent implements OnInit {
     this.model.description = e.target.value;
   }
 
-  async createAsset() {
-    console.log("On createAsset!");
+
+  async createSimpleAssetType() {
+    console.log("On createSimpleAssetType!");
 
     console.log("Asset Name: "+this.model.name);
     console.log("Total Supply: "+this.model.totalSupply);
@@ -89,12 +160,21 @@ export class CreatorFormComponent implements OnInit {
     this.setStatus('Registering contract... (please wait)');
 
     try {
-      const deployedAssetFactory = await this.AssetFactory.deployed();
+      const deployedSimpleAssetTypeFactory = await this.SimpleAssetTypeFactory.deployed();
 
       //TODO: handle the creation of new asset
-      const transaction = await deployedAssetFactory.registerSimpleAssetType(this.model.name,this.model.totalSupply,this.model.description,
-        {gas: 90000*2, from:this.model.account});
-
+      const transaction = await deployedSimpleAssetTypeFactory.createSimpleAssetType(this.model.name,this.model.totalSupply,this.model.description,
+        {gas: 900000, from:this.model.account});
+        console.log(transaction);
+        for(let i = 0; i < transaction.logs.length; i++) {
+          let value = transaction.logs[i];
+          if(value.event == "SimpleAssetTypeCreated") {
+            console.log("SimpleAssetTypeCreated event detected");
+            this.status = "New contract created: "+value.args._contractAddress);
+            console.log(value.args._contractAddress);
+            this.refreshBalance();
+          }
+        });
       /*if (!transaction) {
         this.setStatus('Transaction failed!');
       } else {

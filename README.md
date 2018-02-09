@@ -58,3 +58,7 @@ Using the Angular CLI you can build a distributable of your app. Will be placed 
 `ng build`
 
 
+## Dependencies
+Zeppelin
+
+`npm install -E zeppelin-solidity`
