@@ -1,28 +1,25 @@
-<div class="container-fluid">
-  <h2>Use this tool to build your own custom Crypto-Asset</h2>
+<section>
+  <div>
+    <h3>Store</h3>
 
-  <p>We will build out form sub-components inside this parent component.</p>
+    <label for="store-name">Create a new store for your new asset or choose an existing one.</label>
 
-
-  <form class="container">
-    <div class="form-group">
-      <label for="asset-name">Name:</label>
-      <input class="form-control" type="text" id="name" placeholder="My Crypto Asset" (change)="setName($event)"/>
+    <div>
+      <select id="store-name" name="store-name">
+        <option>Alien Games</option>
+      </select>
+      <button>Create New Store</button>
+      <!-- HiddenForm -->
+      <div class="add-store-form hide">
+        <input type="text" id="store-name" name="store-name" >
+        <button>Save</button>
+      </div>
     </div>
+  </div>
 
-    <div class="form-group">
-      <label for="totalSupply">Total Supply:</label>
-      <input class="form-control" type="text" id="totalSupply" placeholder="10000" (change)="setTotalSupply($event)"/>
-    </div>
+  <hr/>
 
-    <div class="form-group">
-      <label for="description">Description:</label>
-      <input class="form-control" type="text" id="description" placeholder="This is my first Crypto Asset!" (change)="setDescription($event)"/>
-    </div>
+  <app-asset-form></app-asset-form>
 
-    <button class="btn btn-primary" id="create" (click)="createSimpleAssetType()">Create Asset</button>
-  </form>
 
-  <span id="status">{{status}}</span>
-
-</div>
+</section>
