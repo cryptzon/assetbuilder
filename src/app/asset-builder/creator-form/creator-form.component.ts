@@ -7,9 +7,9 @@ import assetType_artifacts from '../../../../build/contracts/AssetType.json';
 import simplAssetType_artifacts from '../../../../build/contracts/SimpleAssetType.json';
 
 // TODO: Move to an util library
-let toAscii = function(str) {
-  return web3.toAscii(str).replace(/\u0000/g, '');
-}
+// let toAscii = function(str) {
+//   return web3.toAscii(str).replace(/\u0000/g, '');
+// }
 
 
 @Component({
@@ -94,8 +94,8 @@ export class CreatorFormComponent implements OnInit {
         //console.log(assetContractAddress);
 
         let assetType = await this.AssetType.at(assetContractAddress);
-        let assetTypeStr = toAscii(await assetType.assetType.call());
-        console.log(assetContractAddress+" - "+assetTypeStr);
+        // let assetTypeStr = toAscii(await assetType.assetType.call());
+        // console.log(assetContractAddress+" - "+assetTypeStr);
       }
 
       /*
@@ -170,11 +170,11 @@ export class CreatorFormComponent implements OnInit {
           let value = transaction.logs[i];
           if(value.event == "SimpleAssetTypeCreated") {
             console.log("SimpleAssetTypeCreated event detected");
-            this.status = "New contract created: "+value.args._contractAddress);
+            this.status = "New contract created: "+value.args._contractAddress;
             console.log(value.args._contractAddress);
             this.refreshBalance();
           }
-        });
+        };
       /*if (!transaction) {
         this.setStatus('Transaction failed!');
       } else {
