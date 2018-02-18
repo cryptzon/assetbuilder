@@ -3,21 +3,19 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
-import { AssetBuilderModule } from './asset-builder/asset-builder.module';
 import { CreatorFormComponent } from './asset-builder/creator-form/creator-form.component';
-import {MetaModule} from './meta/meta.module';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CreatorFormComponent
+    CreatorFormComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
-    AssetBuilderModule,
-    MetaModule
+    HttpModule
   ],
   providers: [],
   bootstrap: [AppComponent]
