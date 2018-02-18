@@ -1,1 +1,52 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+	font-family: 'Montserrat Alternates', sans-serif;
+  font-weight: 400;
+}
+h1, h2, h3, h4 {
+	font-family: 'Volkhov', serif;
+}
+h5{
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-weight: 700;
+}
+a {
+  color: #593492;
+}
+.hide {
+  display:none;
+}
+.show {
+  display: inline-block;
+}
+input[type="text"],
+input[type="number"],
+select.form-control,
+select,
+textarea,
+textarea.form-control {
+  border: 2px solid #666;
+}
+label span {
+  font-size:.8em;
+  font-style: italic;
+}
+.form-group {
+  margin-bottom: 1.6em;
+}
+.input-wrapper input,
+.input-wrapper select {
+  margin-bottom: .6em;
+}
+input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #bbb;
+}
+input::-moz-placeholder { /* Firefox 19+ */
+  color: #bbb;
+}
+input:-ms-input-placeholder { /* IE 10+ */
+  color: #bbb;
+}
+input:-moz-placeholder { /* Firefox 18- */
+  color: #bbb;
+}

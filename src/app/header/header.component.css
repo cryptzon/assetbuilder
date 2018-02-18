@@ -1,0 +1,28 @@
+header {
+	text-align: center;
+	background-color: #b0e642;
+	padding: .6em;
+	width: 100%;
+}
+	#header-wrapper {}
+	#taiga-logo{}
+	nav {
+		text-align:left;
+    min-height:1.2em;
+	}
+	nav ul {
+		list-style: none;
+		float:left;
+    margin-bottom: 0;
+	}
+  	nav ul li {
+  		float:left;
+  		padding-right: 4em;
+  	}
+      nav ul li a {
+        text-decoration: none;
+        padding: .3em .8em .6em;
+      }
+      nav ul li a.active {
+        border-bottom: 3px solid #593492;
+      }

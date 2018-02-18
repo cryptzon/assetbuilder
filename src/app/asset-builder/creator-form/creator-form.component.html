@@ -1,28 +1,123 @@
-<div class="container-fluid">
-  <h2>Use this tool to build your own custom Crypto-Asset</h2>
+<div class="main-wrapper container">
+  <h1>Asset Builder</h1>
 
-  <p>We will build out form sub-components inside this parent component.</p>
-
-
-  <form class="container">
-    <div class="form-group">
-      <label for="asset-name">Name:</label>
-      <input class="form-control" type="text" id="name" placeholder="My Crypto Asset" (change)="setName($event)"/>
+  <section class="row">
+    <div class="instructions col-md-7">
+      <div class="row">
+        <div class="icon-pullout col-md-2"><img src="assets/taiga-black.png" /></div>
+        <div class="instructions-copy col-md-10">
+          You are contributing to a decentralized marketplace. Use this power wisely.
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div class="form-group">
-      <label for="totalSupply">Total Supply:</label>
-      <input class="form-control" type="text" id="totalSupply" placeholder="10000" (change)="setTotalSupply($event)"/>
-    </div>
+  <hr/>
 
-    <div class="form-group">
-      <label for="description">Description:</label>
-      <input class="form-control" type="text" id="description" placeholder="This is my first Crypto Asset!" (change)="setDescription($event)"/>
-    </div>
+  <section class="store">
+    <!-- Asset -->
+    <form>
+      <div class="store-wrapper row">
+        <h5 class="col-md-7">Store</h5>
+        <label for="store-name" class=" col-md-7">Create a new store for your new asset or choose an existing one.</label>
 
-    <button class="btn btn-primary" id="create" (click)="createSimpleAssetType()">Create Asset</button>
-  </form>
+        <br/>
 
-  <span id="status">{{status}}</span>
+        <div class="form-group col-md-12">
+          <div class="row">
+            <div class="col-md-7">
+              <select class="form-control" id="store-name" name="store-name">
+                <option>Alien Games</option>
+              </select>
+            </div>
+            <div class="col-md-5">
+              <button class="btn btn-primary">Create New Store</button>
+            </div>
+          </div>
 
+          <!-- HiddenForm -->
+          <div class="add-store-form hide form-group">
+            <label for="store-name">Store Name</label>
+            <input class="form-control" type="text" id="store-name" name="store-name" >
+            <br>
+            <button class="btn btn-primary">Save</button>
+          </div>
+        </div>
+      </div>
+
+      <hr/>
+
+      <div class="asset-wrapper row">
+        <h5 class="col-md-7">Asset</h5>
+
+        <p class="col-md-7">Define the characteristics of your asset</p>
+
+        <!-- Asset Type -->
+        <div class="input-wrapper form-group col-md-7">
+          <label for="asset-description">Asset Type</label>
+          <select class="form-control" id="asset-description" name="asset-description" (change)="setDescription($event)">
+            <option>Games</option>
+            <option>Music</option>
+            <option>Video</option>
+            <option>Image</option>
+            <option>Text</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <!-- Title -->
+        <div class="input-wrapper form-group col-md-7">
+          <label for="asset-title">Title</label>
+          <input class="form-control" type="text" id="asset-title" name="asset-title" placeholder="My Crypto Asset" (change)="setName($event)">
+        </div>
+
+        <!-- Description -->
+        <div class="input-wrapper form-group col-md-7">
+          <label for="asset-description">Description <span>(Maximum of 200 characters)</span></label>
+          <textarea class="form-control" id="asset-description" name="asset-supply"></textarea>
+        </div>
+
+        <!-- Image URL -->
+        <div class="input-wrapper form-group col-md-7 image-bg">
+          <label for="asset-image">Enter the URL to your asset image.</label>
+          <input class="form-control" type="text" id="asset-image" name="asset-image">
+
+          <div class="upload-image-wrapper">
+            <img src="assets/upload.png" />
+            <p>TAIGA does not store your assets. We recommend using ipfs.io for hosting your content.</p>
+            <small>(No larger than 286 x 386 pixels.)</small>
+          </div>
+        </div>
+
+        <!-- Supply and Price -->
+        <div class="input-wrapper form-group col-md-7">
+          <div class="row">
+            <div class="col-md-6">
+              <label for="asset-supply">Supply</label>
+              <input class="form-control" type="text" id="asset-supply" name="asset-supply" placeholder="10000" (change)="setTotalSupply($event)">
+            </div>
+            <div class="col-md-6">
+              <label for="asset-supply">Price</label>
+              <div class="row">
+                <span class="currency-wrapper col-md-2"><img src="assets/ethereum.png" class="currency"/></span>
+                <input class="form-control col-md-10" type="text" id="asset-price" name="asset-price" placeholder="10000" (change)="setTotalSupply($event)">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Properties -->
+        <div class="input-wrapper form-group col-md-7">
+          <label for="asset-description">Properties</label>
+          <textarea class="form-control" id="asset-properties" name="asset-properties"></textarea>
+        </div>
+
+
+        <div class="button-wrapper col-md-7">
+          <button type="submit" class="btn btn-primary" (click)="createSimpleAssetType()">Create New Asset</button>
+        </div>
+      </div>
+    </form>
+
+  </section>
 </div>

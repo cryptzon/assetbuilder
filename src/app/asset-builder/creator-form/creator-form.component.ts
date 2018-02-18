@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Web3Service } from '../../util/web3.service';
 
-import simpleAssetTypeFactory_artifacts from '../../../../build/contracts/SimpleAssetTypeFactory.json';
-import assetTypesRegistry_artifacts from '../../../../build/contracts/AssetTypesRegistry.json';
-import assetType_artifacts from '../../../../build/contracts/AssetType.json';
-import simplAssetType_artifacts from '../../../../build/contracts/SimpleAssetType.json';
+// import simpleAssetTypeFactory_artifacts from '../../../../build/contracts/SimpleAssetTypeFactory.json';
+// import assetTypesRegistry_artifacts from '../../../../build/contracts/AssetTypesRegistry.json';
+// import assetType_artifacts from '../../../../build/contracts/AssetType.json';
+// import simplAssetType_artifacts from '../../../../build/contracts/SimpleAssetType.json';
 
 // TODO: Move to an util library
 // let toAscii = function(str) {
@@ -37,7 +37,7 @@ export class CreatorFormComponent implements OnInit {
 
   constructor(private web3Service: Web3Service) {
     console.log('Constructor: ' + web3Service);
-  }
+  } 
 
   ngOnInit() {
     console.log('OnInit: ' + this.web3Service);
@@ -46,32 +46,32 @@ export class CreatorFormComponent implements OnInit {
     this.watchAccount();
 
     // get AssetFactory contract
-    this.web3Service.artifactsToContract(assetTypesRegistry_artifacts)
-      .then((contractAbstraction) => {
-        this.AssetTypesRegistry = contractAbstraction;
-      }
-    );
-    this.web3Service.artifactsToContract(simpleAssetTypeFactory_artifacts)
-      .then(async (contractAbstraction) => {
-        this.SimpleAssetTypeFactory = contractAbstraction;
-        const deployedSimpleAssetTypeFactory = await this.SimpleAssetTypeFactory.deployed();
+    // this.web3Service.artifactsToContract(assetTypesRegistry_artifacts)
+    //   .then((contractAbstraction) => {
+    //     this.AssetTypesRegistry = contractAbstraction;
+    //   }
+    // );
+    // this.web3Service.artifactsToContract(simpleAssetTypeFactory_artifacts)
+    //   .then(async (contractAbstraction) => {
+    //     this.SimpleAssetTypeFactory = contractAbstraction;
+    //     const deployedSimpleAssetTypeFactory = await this.SimpleAssetTypeFactory.deployed();
 
-        let factoryRegistryAddress = await deployedSimpleAssetTypeFactory.assetTypesRegistry.call();
-        this.status = "Registry address: "+factoryRegistryAddress;
+    //     let factoryRegistryAddress = await deployedSimpleAssetTypeFactory.assetTypesRegistry.call();
+    //     this.status = "Registry address: "+factoryRegistryAddress;
 
-      }
-    );
-    this.web3Service.artifactsToContract(assetType_artifacts)
-      .then((contractAbstraction) => {
-        this.AssetType = contractAbstraction;
-        this.refreshBalance();
-      }
-    );
-    this.web3Service.artifactsToContract(simplAssetType_artifacts)
-      .then((contractAbstraction) => {
-        this.SimpleAssetType = contractAbstraction;
-      }
-    );
+    //   }
+    // );
+    // this.web3Service.artifactsToContract(assetType_artifacts)
+    //   .then((contractAbstraction) => {
+    //     this.AssetType = contractAbstraction;
+    //     this.refreshBalance();
+    //   }
+    // );
+    // this.web3Service.artifactsToContract(simplAssetType_artifacts)
+    //   .then((contractAbstraction) => {
+    //     this.SimpleAssetType = contractAbstraction;
+    //   }
+    // );
   }
 
   watchAccount() {

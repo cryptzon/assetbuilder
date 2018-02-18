@@ -6,18 +6,8 @@ Dapp for creating custom crypto-assets
 Install dependencies:
 
 ```
-npm install -g truffle
-npm install -g @angular/core
-npm install -g @angular/compiler
-npm install -g @angular/cli
-npm install -g ethereumjs-testrpc
+npm install
 ```
-
-You will also need MetaMask chrome extension
-
-
-`truffle unbox Quintor/angular-truffle-box`
-
 
 Run your TestRPC client
 
@@ -56,9 +46,3 @@ Running the Truffle tests:
 Using the Angular CLI you can build a distributable of your app. Will be placed in dist/
 
 `ng build`
-
-
-## Dependencies
-Zeppelin
-
-`npm install -E zeppelin-solidity`
