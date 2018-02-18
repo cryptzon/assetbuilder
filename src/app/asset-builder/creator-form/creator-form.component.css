@@ -1,0 +1,50 @@
+
+.main-wrapper {
+  padding-top: 1.4em;
+}
+h1 {
+  margin-bottom:1.2em;
+}
+.main-wrapper {
+  margin-bottom: 2em;
+}
+hr {
+  margin-bottom: 2em;
+}
+textarea {
+  height:8em;
+}
+.button-wrapper {
+  text-align: center;
+}
+  .btn.btn-primary {
+    background-color: #12075c;
+    color:white;
+    border-color: #12075c;
+  }
+.icon-pullout {
+  vertical-align: middle;
+  text-align: center;
+}
+.upload-image-wrapper {
+  width: 100%;
+}
+.image-bg {
+  padding: .8em;
+  border: thin solid #d9d9d9;
+}
+.upload-image-wrapper img {
+  float:right;
+  vertical-align: top;
+  border: thin solid #ccc;
+}
+.input-group span {
+  min-width:1.2em;
+  clear:both;
+}
+.currency-wrapper {
+  padding-top: .4em;
+}
+.currency {
+  width: 1em;
+}
